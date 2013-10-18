@@ -1,6 +1,8 @@
 # Pen
 
-TODO: Write a gem description
+Pen Editor for Rails
+
+See https://github.com/sofish/pen for more information.
 
 ## Installation
 
@@ -18,7 +20,26 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+**in application.css**
+
+```css
+/*
+*= require 'pen'
+*/
+```
+
+**in application.js**
+
+```javascript
+//= require 'pen'
+```
+
+**invoke pen
+```js
+var editor = new Pen('#editor');
+```
+
+See https://github.com/sofish/pen for more.
 
 ## Contributing
 
