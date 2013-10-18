@@ -34,6 +34,13 @@ Or install it yourself as:
 //= require 'pen'
 ```
 
+**invoke pen
+```js
+var editor = new Pen('#editor');
+```
+
+See https://github.com/sofish/pen for more.
+
 ## Contributing
 
 1. Fork it
