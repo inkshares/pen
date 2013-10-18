@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Pen::VERSION
   spec.authors       = ["Torsten Trautwein"]
   spec.email         = ["trautwein@neowork.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = %q{Pen Editor for Rails}
+  spec.summary       = %q{Pen Editor for Rails}
+  spec.homepage      = "https://github.com/neowork/pen"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
