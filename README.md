@@ -1,6 +1,6 @@
 # Pen
 
-Pen Editor for Rails
+Pen Editor for Rails [![Gem Version](https://badge.fury.io/rb/pen.png)](http://badge.fury.io/rb/pen)
 
 See https://github.com/sofish/pen for more information.
 
