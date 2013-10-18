@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-**in application.css**
+**In application.css**
 
 ```css
 /*
@@ -28,13 +28,13 @@ Or install it yourself as:
 */
 ```
 
-**in application.js**
+**In application.js**
 
 ```javascript
 //= require 'pen'
 ```
 
-**invoke pen
+**Invoke pen**
 ```js
 var editor = new Pen('#editor');
 ```
