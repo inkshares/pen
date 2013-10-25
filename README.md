@@ -1,6 +1,7 @@
 # Pen
+[![Gem Version](https://badge.fury.io/rb/pen.png)](http://badge.fury.io/rb/pen) [![Code Climate](https://codeclimate.com/repos/526a0a487e00a43d0500112f/badges/437609ff3647a05fe6c6/gpa.png)](https://codeclimate.com/repos/526a0a487e00a43d0500112f/feed)
 
-Pen Editor for Rails [![Gem Version](https://badge.fury.io/rb/pen.png)](http://badge.fury.io/rb/pen)
+Pen Editor for Rails 
 
 See https://github.com/sofish/pen for more information.
 
