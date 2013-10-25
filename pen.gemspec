@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["trautwein@neowork.com"]
   spec.description   = %q{Pen Editor for Rails}
   spec.summary       = %q{Pen Editor for Rails}
-  spec.homepage      = "https://github.com/neowork/pen"
+  spec.homepage      = "http://neowork.github.io/pen"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
