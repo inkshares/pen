@@ -1,12 +1,17 @@
 # Pen Editor
 
-- **LIVE DEMO:** [http://sofish.github.io/pen](http://sofish.github.io/pen)
-- **Markdown is supported**
-- **Build status:** [![Build Status](https://travis-ci.org/sofish/pen.png?branch=master)](https://travis-ci.org/sofish/pen)
+- Modified for use on Inkshares.com
+- Forked from https://github.com/sofish/pen
 
+The Inkshares version incorporates three notable changes:
+1. Toolbar icons use Fontawesome instead of the custom font included in the original Pen Editor repository.  This means FontAwesome must be included in your project to use this Pen Editor version.
+
+1. "style" attributes with a background image are not removed when the Pen Editor is initialized.  This is done to preserve cover photos that are common on Inkshares articles.
+
+1. "pen.css" has been renamed to "pen.css.sass" for organizational purposes, which means you need a sass compiler within your project.
 ******************
 
-![pen editor - screenshot ](https://f.cloud.github.com/assets/153183/1093671/61d4c0d2-16a9-11e3-88ed-01b1758a9a42.png)
+![pen editor - screenshot ](https://s3-us-west-2.amazonaws.com/inkshares-production/images/open_source/inkshares-pen-toolbar-screenshot.png)
 
 ******************
 

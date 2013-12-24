@@ -1,5 +1,7 @@
-/*! Licensed under MIT, https://github.com/sofish/pen */
-/* jshint -W030, -W093, -W015 */
+/*! Licensed under MIT, https://github.com/sofish/pen
+ * jshint -W030, -W093, -W015
+ * Tweaked by Inkshares.
+*/
 (function(doc) {
 
   var Pen, FakePen, utils = {};
@@ -119,7 +121,10 @@
   Pen.prototype.nostyle = function() {
     var els = this.config.editor.querySelectorAll('[style]');
     [].slice.call(els).forEach(function(item) {
-      item.removeAttribute('style');
+      // Don't wipe out background images!
+      if (0 > item.getAttribute('style').indexOf('background-image')){
+        item.removeAttribute('style');
+      }
     });
     return this;
   };
