@@ -5,7 +5,7 @@
 
 The Inkshares version incorporates three notable changes:
 
-1. Toolbar icons use Fontawesome instead of the custom font included in the original Pen Editor repository.  This means FontAwesome must be included in your project to use this Pen Editor version.
+1. Toolbar icons use FontAwesome instead of the custom font included in the original Pen Editor repository.  This means FontAwesome must be included in your project to use this Pen Editor version.
 
 1. "style" attributes with a background image are not removed when the Pen Editor is initialized.  This is done to preserve cover photos that are common on Inkshares articles.
 
