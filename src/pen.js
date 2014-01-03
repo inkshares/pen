@@ -179,7 +179,7 @@
     editor.addEventListener('keyup', toggle);
 
     // toggle toolbar on key select
-    menu.addEventListener('click.MenuClick', function(e) {
+    menu.addEventListener('click', function(e) {
       var action = e.target.getAttribute('data-action');
 
       if(!action) return;
