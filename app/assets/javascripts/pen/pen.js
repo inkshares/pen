@@ -294,10 +294,15 @@
           action = 'unlink';
           apply();
         };
-
-        return input.onkeypress = function(e) {
-          if(e.which === 13) return createlink(e.target);
-        };
+        
+        makeLink = function(){
+          $('body').click 
+          input.onkeypress = function(e) {
+            if(e.which === 13) return createlink(e.target);
+          };
+        }
+        
+        return makeLink();
       }
 
       apply();
