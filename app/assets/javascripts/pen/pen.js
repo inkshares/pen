@@ -296,7 +296,10 @@
         };
         
         makeLink = function(){
-          $('body').click 
+          $('body')[0].onclick = function(e) {
+            return createlink(input);
+          };
+          
           input.onkeypress = function(e) {
             if(e.which === 13) return createlink(e.target);
           };
