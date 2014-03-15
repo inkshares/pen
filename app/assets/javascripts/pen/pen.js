@@ -116,15 +116,14 @@
     //test
     try {
       var a = selection.getRangeAt(0).commonAncestorContainer.parentNode;
-
       var els = [];
 
-      while (a && a.getAttribute && a.getAttribute('data-behavior') !== 'penable') {
+      while (a && a.getAttribute && /\bpenable\b/.test(a.getAttribute('data-behavior')) === false) {
         els.unshift(a);
         a = a.parentNode;
       }
 
-      return a.getAttribute && a.getAttribute('data-behavior') == 'penable';
+      return a.getAttribute && /\bpenable\b/.test(a.getAttribute('data-behavior')) === true;
     }
     catch(err){
       return false;
