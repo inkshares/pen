@@ -162,7 +162,7 @@
     for(var i = 0, list = this.config.list; i < list.length; i++) {
       var name = list[i], klass = 'pen-icon icon-' + name;
       icons += '<i class="' + klass + '" data-action="' + name + '">' + (name.match(/^h[1-6]|p$/i) ? name.toUpperCase() : '') + '</i>';
-      if((name === 'createlink')) icons += '<input class="pen-input" placeholder="http://" />';
+      if((name === 'createlink')) icons += '<input class="pen-input" placeholder="Press Enter to insert link" />';
     }
 
     var menu = doc.createElement('div');
@@ -294,18 +294,10 @@
           action = 'unlink';
           apply();
         };
-        
-        makeLink = function(){
-          $('body')[0].onclick = function(e) {
-            return createlink(input);
-          };
-          
-          input.onkeypress = function(e) {
-            if(e.which === 13) return createlink(e.target);
-          };
-        }
-        
-        return makeLink();
+
+        return input.onkeypress = function(e) {
+          if(e.which === 13) return createlink(e.target);
+        };
       }
 
       apply();
