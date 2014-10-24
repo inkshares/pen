@@ -1,6 +1,7 @@
 /*! Licensed under MIT, https://github.com/sofish/pen
  * jshint -W030, -W093, -W015
  * Tweaked by Inkshares.
+ * GRATUITOUS COMMENT TO MAKE SURE JS IS COPYING OVER. 
 */
 (function(doc) {
 
@@ -51,7 +52,7 @@
       textarea: '<textarea name="content"></textarea>',
       list: [
         'blockquote', 'h2', 'h3', 'p', 'insertorderedlist', 'insertunorderedlist', 'inserthorizontalrule',
-        'indent', 'outdent', 'bold', 'italic', 'underline', 'createlink'
+        'indent', 'outdent', 'bold', 'italic', 'underline', 'createlink', 'insertimg'
       ]
     };
 
@@ -78,6 +79,7 @@
     if(defaults.debug) window._pen_debug_mode_on = true;
 
     var editor = defaults.editor;
+		var imageCallBack = config.imageCallBack
 
     // set default class
     editor.classList.add(defaults.class);
@@ -86,11 +88,16 @@
     var editable = editor.getAttribute('contenteditable');
     if(!editable) editor.setAttribute('contenteditable', 'true');
 
+    // set penable
+    var penable = editor.getAttribute('data-behavior');
+    if(!penable || penable.indexOf('penable') < 0) editor.setAttribute('data-behavior', 'penable');
+
     // assign config
     this.config = defaults;
 
     // save the selection obj
     this._sel = doc.getSelection();
+
 
     // map actions
     this.actions();
@@ -104,6 +111,24 @@
     // stay on the page
     this.config.stay && this.stay();
   };
+
+  Pen.prototype._hasPenableParent = function(selection){
+    //test
+    try {
+      var a = selection.getRangeAt(0).commonAncestorContainer.parentNode;
+      var els = [];
+
+      while (a && a.getAttribute && /\bpenable\b/.test(a.getAttribute('data-behavior')) === false) {
+        els.unshift(a);
+        a = a.parentNode;
+      }
+
+      return a.getAttribute && /\bpenable\b/.test(a.getAttribute('data-behavior')) === true;
+    }
+    catch(err){
+      return false;
+    }
+  }
 
   // node effects
   Pen.prototype._effectNode = function(el, returnAsNodeName) {
@@ -136,7 +161,7 @@
     for(var i = 0, list = this.config.list; i < list.length; i++) {
       var name = list[i], klass = 'pen-icon icon-' + name;
       icons += '<i class="' + klass + '" data-action="' + name + '">' + (name.match(/^h[1-6]|p$/i) ? name.toUpperCase() : '') + '</i>';
-      if((name === 'createlink')) icons += '<input class="pen-input" placeholder="http://" />';
+      if((name === 'createlink')) icons += '<input class="pen-input" placeholder="Press Enter to insert link" />';
     }
 
     var menu = doc.createElement('div');
@@ -160,28 +185,87 @@
       if(that._isDestroyed) return;
 
       utils.shift('toggle_menu', function() {
-        var range = that._sel;
-        if(!range.isCollapsed) {
-          //show menu
-          that._range = range.getRangeAt(0);
-          that.menu().highlight();
-        } else {
-          //hide menu
-          that._menu.style.display = 'none';
-        }
+
+
+        if (that._hasPenableParent(that._sel)) {
+
+          var range = that._sel;
+          if(!range.isCollapsed) {
+            //show menu
+            that._range = range.getRangeAt(0);
+            that.menu().highlight();
+          } else {
+            //hide menu
+            that._menu.style.display = 'none';
+          }
+        };
+
       }, 200);
     };
 
     // toggle toolbar on mouse select
-    editor.addEventListener('mouseup', toggle);
+    doc.body.addEventListener('mouseup', toggle);
 
     // toggle toolbar on key select
-    editor.addEventListener('keyup', toggle);
+    doc.body.addEventListener('keyup', toggle);
 
     // toggle toolbar on key select
     menu.addEventListener('click', function(e) {
       var action = e.target.getAttribute('data-action');
 
+		  var defaultImageCallBack = function(){
+			  var tempForm = "<form name='ajax-photo-form' method='post' action='/api/photos' enctype='multipart/form-data' method='post' id='ajax-photo-form'>" +
+					    	  		 "<input type='file' id='temp-file-input'></input>" +
+											 "</form>";
+
+			  $('body').append(tempForm);
+
+			  $("#ajax-photo-form").on("submit", function(e){
+					  e.preventDefault();
+						var fileInput = $('#temp-file-input')
+				    var formData    = new FormData();  
+						formData.append('picture',fileInput[0].files[0]);
+						
+					  $.ajax({
+							type: "POST",
+							url: $(this).attr('action'),
+							data: formData,
+							datatype: 'json',
+				      cache: false,
+							processData: false,
+				      contentType: false,
+						  success: function(data){
+		  		   	  var img = document.createElement('img')
+								img.setAttribute('src', data);
+		  		   	  that._range.collapse()
+								that._range.insertNode(img); 
+						  },
+							error: function( error, status, errorthrown ){
+								var text = "We would have inserted your image, but " + error.responseText
+								var br =  document.createElement('br');
+								var errorText =  document.createElement('div');
+								var space =  document.createElement('div');
+								space.innerHTML = '</br>'
+								errorText.setAttribute('class', 'pennable-error-message');
+								errorText.innerHTML = text;
+		  		   	  that._range.collapse();
+								that._range.insertNode(space); 
+								that._range.insertNode(errorText); 
+								that._range.insertNode(br); 								
+							},
+							complete: function(){
+							  $('#ajax-photo-form').remove()
+							}
+					  });
+		      });			  
+
+			  $('#temp-file-input').on("change", function(e){
+				  $("#ajax-photo-form").submit();			
+			  });
+
+			  $('#temp-file-input').trigger('click')	
+			};
+			
       if(!action) return;
 
       var apply = function(value) {
@@ -191,6 +275,10 @@
         that._range = that._sel.getRangeAt(0);
         that.highlight().nostyle().menu();
       };
+	  
+		  if(action ==='insertimg'){
+				defaultImageCallBack(); 
+		  }
 
       // create link
       if(action === 'createlink') {
@@ -343,7 +431,6 @@
     if(!isAJoke) {
       this._sel.removeAllRanges();
       this._menu.style.display = 'none';
-      this._menu.removeEventListener('click');
     }
     this._isDestroyed = destroy;
     this.config.editor[attr]('contenteditable', '');
