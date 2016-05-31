@@ -108,7 +108,7 @@
   // node effects
   Pen.prototype._effectNode = function(el, returnAsNodeName) {
     var nodes = [];
-    while(el !== this.config.editor) {
+    while(el != null && el !== this.config.editor) {
       if(el.nodeName.match(/(?:[pubia]|h[1-6]|blockquote|[uo]l|li)/i)) {
         nodes.push(returnAsNodeName ? el.nodeName.toLowerCase() : el);
       }
